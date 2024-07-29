@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const fs = require("fs");
 const mysql = require("mysql");
@@ -61,7 +63,8 @@ const pool = mysql.createPool({
 
 // Route to get all books
 app.get("/api/books", (req, res) => {
-  console.log(env.DB_HOST);
+  // console.log(env.DB_HOST);
+  // console.log(env.DB_DATABASE);
   pool.getConnection((err, connection) => {
     if (err) {
       console.error("Error connecting to database: " + err.stack);
