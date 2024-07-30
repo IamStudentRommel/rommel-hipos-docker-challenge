@@ -1,21 +1,24 @@
-version: "3.8"
-
 services:
   db:
     build:
-      context: ./docker/db
+      context: ./db
       dockerfile: Dockerfile
     restart: always
+    env_file:
+      - .env
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
   node-service:
     build:
-      context: ./docker/api
+      context: ./api
       dockerfile: Dockerfile
     restart: always
+    env_file:
+      - .env
     environment:
       - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
       - DB_DATABASE=${DB_DATABASE}
@@ -26,9 +29,10 @@ services:
       - "3000:3000"
     depends_on:
       - db
+
   nginx:
     build:
-      context: ./docker/nginx
+      context: ./nginx
       dockerfile: Dockerfile
     restart: always
     ports:
